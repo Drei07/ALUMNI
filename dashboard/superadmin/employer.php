@@ -45,7 +45,7 @@ $user_last_update = $user_data['updated_at'];
 	<section id="sidebar" class="hide">
 		<a href="" class="brand"><img src="../../src/img/main2_logo.png" alt="logo" class="brand-img"></a>
 		<ul class="side-menu">
-			<li><a href=""><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+			<li><a href="./"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
 			<li class="divider" data-text="main">Main</li>
             <li>
 				<a href=""><i class='bx bxs-user icon' ></i> Users <i class='bx bx-chevron-right icon-right' ></i></a>
