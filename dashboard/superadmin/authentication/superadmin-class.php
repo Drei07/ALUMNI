@@ -1,12 +1,4 @@
 <?php
-// set session timeout to 30 minutes
-$session_timeout = 30 * 60; // 30 minutes in seconds
-
-// set session cookie lifetime
-session_set_cookie_params($session_timeout);
-session_cache_limiter('private');
-// start session
-session_start();
 require_once __DIR__. '/../../../database/dbconfig.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

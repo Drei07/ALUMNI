@@ -1,6 +1,6 @@
 <?php
 require_once 'admin-class.php';
-$user = new USER();
+$user = new ADMIN();
 $config = new SystemConfig();
 $main_url = new MainUrl();
 if(empty($_GET['id']) && empty($_GET['code']))

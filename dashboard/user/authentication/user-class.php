@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__. '/../../../database/dbconfig.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -9,7 +8,7 @@ include_once __DIR__.'/../../../configuration/settings-configuration.php';
 require_once __DIR__. '/../../vendor/autoload.php';
 
 
-class USER
+class ALUMNI
 {
 
  private $conn;
@@ -69,30 +68,18 @@ public function mainUrl(){
   return $stmt;
  }
  
- public function register($department_id, $first_name, $middle_name, $last_name, $sex, $date_of_birth, $age, $civil_status, $religion_id, $address_id, $phone_number, $email, $password, $profile, $tokencode, $user_type)
+ public function register($email, $upass, $tokencode)
  {
   try
   {       
    $password = md5($upass);
-   $stmt = $this->conn->prepare("INSERT INTO users(department_id, first_name, middle_name, last_name, sex, date_of_birth, age, civil_status, religion_id, address_id, phone_number, email, password, profile, tokencode, user_type) 
-                                        VALUES(:department_id, :first_name, :middle_name, :last_name, :sex, :date_of_birth, :age, :civil_status, :religion_id, :address_id, :phone_number, :email, :password, :profile, :tokencode, :user_type)");
+   $stmt = $this->conn->prepare("INSERT INTO users(email, password, tokencode) 
+                                        VALUES(:email, :password, :tokencode)");
    
-   $stmt->bindparam(":department_id",$department_id);
-   $stmt->bindparam(":first_name",$first_name);
-   $stmt->bindparam(":middle_name",$middle_name);
-   $stmt->bindparam(":last_name",$last_name);
-   $stmt->bindparam(":sex",$sex);
-   $stmt->bindparam(":date_of_birth",$date_of_birth);
-   $stmt->bindparam(":age",$age);
-   $stmt->bindparam(":civil_status",$civil_status);
-   $stmt->bindparam(":religion_id",$religion_id);
-   $stmt->bindparam(":address_id",$address_id);
-   $stmt->bindparam(":phone_number",$phone_number);
+
    $stmt->bindparam(":email",$email);
    $stmt->bindparam(":password",$password);
-   $stmt->bindparam(":profile",$profile);
    $stmt->bindparam(":tokencode",$tokencode);
-   $stmt->bindparam(":user_type",$user_type);
    $stmt->execute(); 
    return $stmt;
   }
@@ -108,8 +95,8 @@ public function mainUrl(){
  {
   try
   {
-    $stmt = $this->conn->prepare("SELECT * FROM users WHERE email=:email_id AND account_status=:account_status AND (user_type=:user_type2 OR user_type=:user_type3 OR user_type=:user_type4)");
-    $stmt->execute(array(":email_id"=>$email , ":account_status" => "active", ":user_type2" => 2, ":user_type3" => 3, ":user_type4" => 4));
+    $stmt = $this->conn->prepare("SELECT * FROM users WHERE email=:email_id AND account_status=:account_status AND user_type=:user_type");
+    $stmt->execute(array(":email_id"=>$email , ":account_status" => "active", ":user_type" => 3));
     $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
     
 
@@ -126,7 +113,7 @@ public function mainUrl(){
   
       $stmt = $this->conn->prepare("INSERT INTO logs (user_id, activity) VALUES (:user_id, :activity)");
       $stmt->execute(array(":user_id"=>$user_id,":activity"=>$activity));
-      $_SESSION['userSession'] = $userRow['id'];
+      $_SESSION['alumniSession'] = $userRow['id'];
       return true;
      }
      else
@@ -169,7 +156,7 @@ public function mainUrl(){
  
  public function isUserLoggedIn()
  {
-  if(isset($_SESSION['userSession']))
+  if(isset($_SESSION['alumniSession']))
   {
    return true;
   }
@@ -182,7 +169,7 @@ public function mainUrl(){
  
  public function logout()
  {
-  unset($_SESSION['userSession']);
+  unset($_SESSION['alumniSession']);
  }
  
  function send_mail($email,$message,$subject,$smtp_email,$smtp_password,$system_name)

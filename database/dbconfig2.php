@@ -4,7 +4,7 @@
 	try {
 
 		// localhost
-		$pdoConnect = new PDO("mysql:host=localhost;dbname=scheduling", "root", "");
+		$pdoConnect = new PDO("mysql:host=localhost;dbname=alumni", "root", "");
 
 		// Live
 		// $pdoConnect = new PDO("mysql:host=localhost;dbname=u867039073_dhvsu_qrcode", "u867039073_dhvsu_qrcode", "Andreishania12");

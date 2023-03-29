@@ -1,6 +1,6 @@
 <?php
 require_once 'authentication/superadmin-class.php';
-include_once '../../configuration/settings-configuration..php';
+include_once '../../configuration/settings-configuration.php';
 
 // instances of the classes
 $config = new SystemConfig();
@@ -31,14 +31,10 @@ $user_last_update = $user_data['updated_at'];
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="../../src/img/<?php echo $config->getSystemLogo() ?>">
-	<link rel="stylesheet" href="../../src/node_modules/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../../src/node_modules/boxicons/css/boxicons.min.css">
-	<link rel="stylesheet" href="../../src/node_modules/aos/dist/aos.css">
-    <link rel="stylesheet" href="../../src/css/admin.css?v=<?php echo time(); ?>">
-	<title>Dashboard</title>
+    <?php
+    include_once '../../configuration/header.php';
+    ?>
+	<title>Track Me | Profile</title>
 </head>
 <body>
 
@@ -47,25 +43,21 @@ $user_last_update = $user_data['updated_at'];
 
 	<!-- SIDEBAR -->
 	<section id="sidebar" class="hide">
-		<a href="./" class="brand"><img src="../../src/img/<?php echo $config->getSystemLogo() ?>" alt="logo" class="brand-img"></i>&nbsp;&nbsp;NES</a>
+		<a href="" class="brand"><img src="../../src/img/main2_logo.png" alt="logo" class="brand-img"></a>
 		<ul class="side-menu">
-			<li><a href="./" class=""><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+			<li><a href="./" ><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
 			<li class="divider" data-text="main">Main</li>
             <li>
 				<a href=""><i class='bx bxs-user icon' ></i> Users <i class='bx bx-chevron-right icon-right' ></i></a>
 				<ul class="side-dropdown">
-					<li><a href="teacher">Teacher</a></li>
 					<li><a href="admin">Admin</a></li>
-					<li><a href="pricipal">Principal</a></li>
-					<li><a href="scheduler">Scheduler</a></li>
+					<li><a href="employer">Employer</a></li>
+					<li><a href="alumni">Alumni</a></li>
 				</ul>
 			</li>
-			<li><a href="department"><i class='bx bxs-building-house icon'></i> Department</a></li>
-			<li><a href="schedules"><i class='bx bxs-calendar-event icon'></i> Schedules</a></li>
-			<li><a href="rooms"><i class='bx bxs-door-open icon'></i> Rooms</a></li>
-			<li><a href="classes"><i class='bx bxs-chalkboard icon'></i> Classes</a></li>
-			<li><a href="subjects"><i class='bx bxs-book icon'></i> Subjects</a></li>
-
+			<li><a href="course"><i class='bx bx-list-ul icon'></i> Course</a></li>
+			<li><a href="jobs"><i class='bx bxs-briefcase icon'></i> Jobs</a></li>
+			<li><a href="reports"><i class='bx bxs-report icon'></i> Reports</a></li>
 			<li><a href="audit-trail"><i class='bx bxl-blogger icon'></i> Audit Trail</a></li>
 
 		</ul>
@@ -120,9 +112,9 @@ $user_last_update = $user_data['updated_at'];
 						<img src="../../src/img/<?php echo $user_profile ?>" alt="logo">
 
 						<a href="controller/profile-controller.php?id=<?php echo $user_id ?>&delete_avatar=1" class="delete"><i class='bx bxs-trash'></i></a>
-						<button class="btn btn-primary change" onclick="edit()"><i class='bx bxs-edit'></i> Edit Profile</button>
-						<button class="btn btn-primary change" onclick="avatar()"><i class='bx bxs-user'></i> Change Avatar</button>
-						<button class="btn btn-primary change" onclick="password()"><i class='bx bxs-key'></i> Change Password</button>
+						<button class="btn btn-warning change" onclick="edit()"><i class='bx bxs-edit'></i> Edit Profile</button>
+						<button class="btn btn-warning change" onclick="avatar()"><i class='bx bxs-user'></i> Change Avatar</button>
+						<button class="btn btn-warning change" onclick="password()"><i class='bx bxs-key'></i> Change Password</button>
 
 					</div>
 					
@@ -136,7 +128,7 @@ $user_last_update = $user_data['updated_at'];
 								<label for="name" class="form-label">First Name<span> *</span></label>
 								<input type="text" class="form-control" autocapitalize="on" autocomplete="off" name="first_name" id="first_name" required value="<?php  echo $user_fname  ?>">
 								<div class="invalid-feedback">
-								Please provide a Old Password.
+								Please provide a First Name.
 								</div>
 							</div>
 
@@ -144,7 +136,7 @@ $user_last_update = $user_data['updated_at'];
 								<label for="name" class="form-label">Middle Name</label>
 								<input type="text" class="form-control" autocapitalize="on" autocomplete="off" name="middle_name" id="middle_name" value="<?php  echo $user_mname  ?>">
 								<div class="invalid-feedback">
-								Please provide a Old Password.
+								Please provide a Middle Name.
 								</div>
 							</div>
 
@@ -152,7 +144,7 @@ $user_last_update = $user_data['updated_at'];
 								<label for="name" class="form-label">Last Name<span> *</span></label>
 								<input type="text" class="form-control" autocapitalize="on" autocomplete="off" name="last_name" id="last_name" required value="<?php  echo $user_lname  ?>">
 								<div class="invalid-feedback">
-								Please provide a Old Password.
+								Please provide a Last Name.
 								</div>
 							</div>
 
@@ -168,7 +160,7 @@ $user_last_update = $user_data['updated_at'];
 						</div>
 
 						<div class="addBtn">
-							<button type="submit" class="primary" name="btn-update-profile" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
+							<button type="submit" class="warning" name="btn-update-profile" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
 						</div>
 					</form>
 					</div>
@@ -206,7 +198,7 @@ $user_last_update = $user_data['updated_at'];
 						</div>
 
 						<div class="addBtn">
-							<button type="submit" class="primary" name="btn-update-avatar" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
+							<button type="submit" class="btn-warning" name="btn-update-avatar" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
 						</div>
 					</form>
 					</div>
@@ -228,7 +220,7 @@ $user_last_update = $user_data['updated_at'];
 
 							<div class="col-md-12">
 								<label for="new_pass" class="form-label">New Password<span> *</span></label>
-								<input type="text" class="form-control" autocapitalize="on" autocomplete="off" name="new_password" id="new_pass" required>
+								<input type="password" class="form-control" autocapitalize="on" autocomplete="off" name="new_password" id="new_pass" required>
 								<div class="invalid-feedback">
 								Please provide a New Password.
 								</div>
@@ -236,7 +228,7 @@ $user_last_update = $user_data['updated_at'];
 
 							<div class="col-md-12">
 								<label for="confirm_pass" class="form-label">Confirm Password<span> *</span></label>
-								<input type="text" class="form-control" autocapitalize="on" autocomplete="off" name="confirm_password" id="confirm_pass" required>
+								<input type="password" class="form-control" autocapitalize="on" autocomplete="off" name="confirm_password" id="confirm_pass" required>
 								<div class="invalid-feedback">
 								Please provide a Confirm Password.
 								</div>
@@ -245,7 +237,7 @@ $user_last_update = $user_data['updated_at'];
 						</div>
 
 						<div class="addBtn">
-							<button type="submit" class="btn-primary" name="btn-update-password" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
+							<button type="submit" class="btn-warning" name="btn-update-password" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
 						</div>
 					</form>
 					</div>
@@ -255,13 +247,35 @@ $user_last_update = $user_data['updated_at'];
 		<!-- MAIN -->
 	</section>
 	<!-- END NAVBAR -->
+    <?php
+    include_once '../../configuration/footer.php';
+    ?>
 
-	<script src="../../src/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="../../src/node_modules/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="../../src/node_modules/jquery/dist/jquery.min.js"></script>
-	<script src="../../src/js/dashboard.js"></script>
-    <script src="../../src/js/loader.js"></script>
-	<script src="../../src/js/form.js"></script>
+	<script>
+
+	window.onpageshow = function() {
+			document.getElementById('avatar').style.display = 'none';
+			document.getElementById('password').style.display = 'none';
+			};
+	
+			function edit(){
+				document.getElementById('Edit').style.display = 'block';
+				document.getElementById('password').style.display = 'none';
+				document.getElementById('avatar').style.display = 'none';
+			}
+	
+			function avatar(){
+				document.getElementById('avatar').style.display = 'block';
+				document.getElementById('Edit').style.display = 'none';
+				document.getElementById('password').style.display = 'none';
+			}
+	
+			function password(){
+				document.getElementById('password').style.display = 'block';
+				document.getElementById('avatar').style.display = 'none';
+				document.getElementById('Edit').style.display = 'none';
+			}
+	</script>
 
 	<!-- SWEET ALERT -->
 	<?php

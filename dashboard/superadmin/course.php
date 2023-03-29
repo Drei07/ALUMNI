@@ -1,6 +1,6 @@
 <?php
 require_once 'authentication/superadmin-class.php';
-include_once '../../configuration/settings-configuration..php';
+include_once '../../configuration/settings-configuration.php';
 
 // instances of the classes
 $config = new SystemConfig();
@@ -31,14 +31,10 @@ $user_last_update = $user_data['updated_at'];
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="../../src/img/<?php echo $config->getSystemLogo() ?>">
-	<link rel="stylesheet" href="../../src/node_modules/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../../src/node_modules/boxicons/css/boxicons.min.css">
-	<link rel="stylesheet" href="../../src/node_modules/aos/dist/aos.css">
-    <link rel="stylesheet" href="../../src/css/admin.css?v=<?php echo time(); ?>">
-	<title>Dashboard</title>
+    <?php
+    include_once '../../configuration/header.php';
+    ?>
+	<title>Track Me | Course</title>
 </head>
 <body>
 
@@ -47,25 +43,21 @@ $user_last_update = $user_data['updated_at'];
 
 	<!-- SIDEBAR -->
 	<section id="sidebar" class="hide">
-		<a href="" class="brand"><img src="../../src/img/<?php echo $config->getSystemLogo() ?>" alt="logo" class="brand-img"></i>&nbsp;&nbsp;NES</a>
+		<a href="" class="brand"><img src="../../src/img/main2_logo.png" alt="logo" class="brand-img"></a>
 		<ul class="side-menu">
-			<li><a href="" class=""><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+			<li><a href="./"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
 			<li class="divider" data-text="main">Main</li>
             <li>
 				<a href=""><i class='bx bxs-user icon' ></i> Users <i class='bx bx-chevron-right icon-right' ></i></a>
 				<ul class="side-dropdown">
-					<li><a href="teacher">Teacher</a></li>
 					<li><a href="admin">Admin</a></li>
-					<li><a href="pricipal">Principal</a></li>
-					<li><a href="scheduler">Scheduler</a></li>
+					<li><a href="employer">Employer</a></li>
+					<li><a href="alumni">Alumni</a></li>
 				</ul>
 			</li>
-            <li><a href="department" class="active"><i class='bx bxs-building-house icon'></i> Department</a></li>
-			<li><a href="schedules"><i class='bx bxs-calendar-event icon'></i> Schedules</a></li>
-			<li><a href="rooms"><i class='bx bxs-door-open icon'></i> Rooms</a></li>
-			<li><a href="classes"><i class='bx bxs-chalkboard icon'></i> Classes</a></li>
-			<li><a href="subjects"><i class='bx bxs-book icon'></i> Subjects</a></li>
-
+			<li><a href="course" class="active"><i class='bx bx-list-ul icon'></i> Course</a></li>
+			<li><a href="jobs"><i class='bx bxs-briefcase icon'></i> Jobs</a></li>
+			<li><a href="reports"><i class='bx bxs-report icon'></i> Reports</a></li>
 			<li><a href="audit-trail"><i class='bx bxl-blogger icon'></i> Audit Trail</a></li>
 
 		</ul>
@@ -103,18 +95,18 @@ $user_last_update = $user_data['updated_at'];
 
 		<!-- MAIN -->
 		<main>
-			<h1 class="title">Department</h1>
+			<h1 class="title">Course</h1>
 			<ul class="breadcrumbs">
 				<li><a href="./" >Home</a></li>
 				<li class="divider">|</li>
-                <li><a href="" class="active">Department</a></li>
+                <li><a href="" class="active">Course List</a></li>
 			</ul>
 			<div class="level">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#classModal"><i class='bx bx-plus-medical'></i> Add Department</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#classModal"><i class='bx bx-plus-medical'></i> Add Course</button>
             </div>
             <section class="data-table">
                 <div class="searchBx">
-                    <input type="input" placeholder="search department" class="search" name="search_box" id="search_box"><button class="searchBtn"><i class="bx bx-search icon"></i></button>
+                    <input type="input" placeholder="Search course...." class="search" name="search_box" id="search_box"><button class="searchBtn"><i class="bx bx-search icon"></i></button>
                 </div>
 
                 <div class="table">
@@ -132,27 +124,27 @@ $user_last_update = $user_data['updated_at'];
 					<div class="modal-content">
 					<div class="header"></div>
 						<div class="modal-header">
-							<h5 class="modal-title" id="classModalLabel"><i class='bx bxs-building-house icon'></i> Add Department</h5>
+							<h5 class="modal-title" id="classModalLabel"><i class='bx bxs-user icon'></i> Add Course</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
 						<section class="data-form-modals">
 							<div class="registration">
-								<form action="controller/department-controller.php" method="POST" class="row gx-5 needs-validation" name="form" onsubmit="return validate()"  novalidate style="overflow: hidden;">
+								<form action="controller/course-controller.php" method="POST" class="row gx-5 needs-validation" name="form" onsubmit="return validate()"  novalidate style="overflow: hidden;">
 									<div class="row gx-5 needs-validation">
 
 										<div class="col-md-12">
-											<label for="acdemic" class="form-label">Department Name<span> *</span></label>
-											<input type="text" onkeyup="this.value = this.value.toUpperCase();" class="form-control" autocapitalize="on"  autocomplete="off" name="department" id="department" required>
+											<label for="acdemic" class="form-label">Course Name<span> *</span></label>
+											<input type="text" onkeyup="this.value = this.value.toUpperCase();" class="form-control" autocapitalize="on"  autocomplete="off" name="course_name" id="course_name" placeholder="Ex. BS Information Technology" required>
 											<div class="invalid-feedback">
-											Please provide a Room.
+											Please provide a Course Name.
 											</div>
 										</div>
 
 									</div>
 
 									<div class="addBtn">
-										<button type="submit" class="btn-primary" name="btn-add" id="btn-add" onclick="return IsEmpty(); sexEmpty();">Add</button>
+										<button type="submit" class="btn-warning" name="btn-add-course" id="btn-add" onclick="return IsEmpty(); sexEmpty();">Add</button>
 									</div>
 								</form>
 							</div>
@@ -164,15 +156,9 @@ $user_last_update = $user_data['updated_at'];
 		</div>
 	</section>
 	<!-- END NAVBAR -->
-
-	
-	<script src="../../src/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="../../src/node_modules/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="../../src/node_modules/jquery/dist/jquery.min.js"></script>
-	<script src="../../src/js/dashboard.js"></script>
-    <script src="../../src/js/loader.js"></script>
-    <script src="../../src/js/form.js"></script>
-	
+    <?php
+    include_once '../../configuration/footer.php';
+    ?>
 	<script>
 
         //live search---------------------------------------------------------------------------------------//
@@ -183,7 +169,7 @@ $user_last_update = $user_data['updated_at'];
         function load_data(page, query = '')
         {
         $.ajax({
-            url:"tables/department-tables.php",
+            url:"tables/course-tables.php",
             method:"POST",
             data:{page:page, query:query},
             success:function(data)
@@ -211,21 +197,22 @@ $user_last_update = $user_data['updated_at'];
 	<!-- SWEET ALERT -->
 	<?php
 
-	if(isset($_SESSION['status']) && $_SESSION['status'] !='')
-	{
-		?>
-		<script>
-			swal({
-			title: "<?php echo $_SESSION['status_title']; ?>",
-			text: "<?php echo $_SESSION['status']; ?>",
-			icon: "<?php echo $_SESSION['status_code']; ?>",
-			button: false,
-			timer: <?php echo $_SESSION['status_timer']; ?>,
-			});
-		</script>
-		<?php
-		unset($_SESSION['status']);
-	}
+if(isset($_SESSION['status']) && $_SESSION['status'] !='')
+{
 	?>
+	<script>
+		swal({
+		title: "<?php echo $_SESSION['status_title']; ?>",
+		text: "<?php echo $_SESSION['status']; ?>",
+		icon: "<?php echo $_SESSION['status_code']; ?>",
+		button: false,
+		timer: <?php echo $_SESSION['status_timer']; ?>,
+		});
+	</script>
+	<?php
+	unset($_SESSION['status']);
+}
+
+?>
 </body>
 </html>

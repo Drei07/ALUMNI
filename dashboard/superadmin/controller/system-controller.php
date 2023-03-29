@@ -1,5 +1,5 @@
 <?php
-session_start();
+include_once '../../../configuration/settings-configuration.php';
 include_once __DIR__.'/../../../database/dbconfig.php';
 
 class SystemSettings {

@@ -31,17 +31,17 @@ else
 }
 
 $query = "
-SELECT * FROM department
+SELECT * FROM course
 ";
 $output = '';
 if($_POST['query'] != '')
 {
   $query .= '
-  WHERE name LIKE "%'.str_replace(' ', '%', $_POST['query']).'%"
+  WHERE course LIKE "%'.str_replace(' ', '%', $_POST['query']).'%"
   ';
 }
 
-$query .= 'ORDER BY id ASC ';
+$query .= 'ORDER BY course ASC ';
 
 $filter_query = $query . 'LIMIT '.$start.', '.$limit.'';
 
@@ -58,20 +58,25 @@ if($total_data > 0)
 $output = '
 
     <thead>
-    <th>ID</th>
-    <th>DEPARTMENT NAME</th>
+    <th>COURSE NAME</th>
     <th>ACTION</th>
     </thead>
 ';
   while($row=$statement->fetch(PDO::FETCH_ASSOC))
   {
+
+    if ($row["status"] == "active") {
+      $button = '<button type="button" class="btn btn-danger V"><a href="controller/course-controller?id=' . $row["id"] . '&delete_course=1" class="delete"><i class="bx bxs-trash"></i></a></button>';
+    } else if ($row["status"] == "disabled") {
+      $button = '<button type="button" class="btn btn-primary V"><a href="controller/course-controller?id=' . $row["id"] . '&activate_course=1" class="activate">Activate</a></button>';
+    }
+
     $output .= '
     <tr>
-      <td>'.$row["id"].'</td>
-      <td>'.$row["name"].'</td>
+      <td>'.$row["course"].'</td>
       <td>
-      <button type="button" class="btn btn-success V"><a href="edit-room?id='.$row["id"].'" class="edit"><i class="bx bxs-edit"></i></a></button>&nbsp;&nbsp;&nbsp;
-      <button type="button" class="btn btn-danger V"><a href="edit-room?id='.$row["id"].'" class="delete"><i class="bx bxs-trash"></i></a></button>
+      <button type="button" class="btn btn-success V"><a href="edit-course?id='.$row["id"].'" class="edit"><i class="bx bxs-edit"></i></a></button>&nbsp;&nbsp;
+      '.$button.'
       </td>        
     </tr>
     ';

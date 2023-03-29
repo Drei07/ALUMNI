@@ -2,7 +2,7 @@
 include_once __DIR__. '/../../../src/api/api.php';
 require_once 'user-class.php';
 
-$user = new USER();
+$user = new ALUMNI();
 $site_secret_key = $user->siteSecretKey();
 
 if($user->isUserLoggedIn()!="")
@@ -26,34 +26,11 @@ if(isset($_POST['btn-signin']))
  
  if($user->login($email,$upass,$user_type))
  {
-   $stmt = $user->runQuery("SELECT * FROM users WHERE email=:email");
-   $stmt->execute(array(":email" => $email));
-   $user_type = $stmt->fetch(PDO::FETCH_ASSOC);
-   
-   if ($user_type['user_type']== 2){
-  
-    $_SESSION['status_title'] = "Hey !";
-    $_SESSION['status'] = "Welcome back! ";
-    $_SESSION['status_code'] = "success";
-    $_SESSION['status_timer'] = 10000;
-   header("Location: ../../principal/");
-    
-   }
-   else if ($user_type['user_type'] == 3){
-      $_SESSION['status_title'] = "Hey !";
-      $_SESSION['status'] = "Welcome back! ";
-      $_SESSION['status_code'] = "success";
-      $_SESSION['status_timer'] = 10000;
-     header("Location: ../../scheduler/");
-      
-   }
-   else if ($user_type['user_type'] == 4){
       $_SESSION['status_title'] = "Hey !";
       $_SESSION['status'] = "Welcome back! ";
       $_SESSION['status_code'] = "success";
       $_SESSION['status_timer'] = 10000;
      header("Location: ../");
-   } 
 
  }
 }else{

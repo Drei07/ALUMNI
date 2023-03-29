@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__. '/../../../database/dbconfig.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -9,7 +8,7 @@ include_once __DIR__.'/../../../configuration/settings-configuration.php';
 require_once __DIR__. '/../../vendor/autoload.php';
 
 
-class USER
+class ADMIN
 {
 
  private $conn;
@@ -124,7 +123,7 @@ public function mainUrl(){
   
       $stmt = $this->conn->prepare("INSERT INTO logs (user_id, activity) VALUES (:user_id, :activity)");
       $stmt->execute(array(":user_id"=>$user_id,":activity"=>$activity));
-      $_SESSION['userSession'] = $userRow['id'];
+      $_SESSION['adminSession'] = $userRow['id'];
       return true;
      }
      else
@@ -167,7 +166,7 @@ public function mainUrl(){
  
  public function isUserLoggedIn()
  {
-  if(isset($_SESSION['userSession']))
+  if(isset($_SESSION['adminSession']))
   {
    return true;
   }
@@ -180,7 +179,7 @@ public function mainUrl(){
  
  public function logout()
  {
-  unset($_SESSION['userSession']);
+  unset($_SESSION['adminSession']);
  }
  
  function send_mail($email,$message,$subject,$smtp_email,$smtp_password,$system_name)

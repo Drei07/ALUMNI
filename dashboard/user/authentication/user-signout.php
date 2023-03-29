@@ -1,13 +1,13 @@
 <?php
 require_once 'user-class.php';
-$user = new USER();
+$user = new ALUMNI();
 
-if(!$user->is_logged_in())
+if(!$user->isUserLoggedIn())
 {
  $user->redirect('../../../');
 }
 
-if($user->is_logged_in()!="")
+if($user->isUserLoggedIn()!="")
 {
  $user->logout();
  $user->redirect('../../../');

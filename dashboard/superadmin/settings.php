@@ -1,6 +1,6 @@
 <?php
 require_once 'authentication/superadmin-class.php';
-include_once '../../configuration/settings-configuration..php';
+include_once '../../configuration/settings-configuration.php';
 
 // instances of the classes
 $config = new SystemConfig();
@@ -30,14 +30,10 @@ $user_last_update = $user_data['updated_at'];
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="../../src/img/<?php echo $config->getSystemLogo() ?>">
-	<link rel="stylesheet" href="../../src/node_modules/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../../src/node_modules/boxicons/css/boxicons.min.css">
-	<link rel="stylesheet" href="../../src/node_modules/aos/dist/aos.css">
-    <link rel="stylesheet" href="../../src/css/admin.css?v=<?php echo time(); ?>">
-	<title>Dashboard</title>
+    <?php
+    include_once '../../configuration/header.php';
+    ?>
+	<title>Track Me | Settings</title>
 </head>
 <body>
 
@@ -46,25 +42,21 @@ $user_last_update = $user_data['updated_at'];
 
 	<!-- SIDEBAR -->
 	<section id="sidebar" class="hide">
-		<a href="./" class="brand"><img src="../../src/img/<?php echo $config->getSystemLogo() ?>" alt="logo" class="brand-img"></i>&nbsp;&nbsp;NES</a>
+		<a href="" class="brand"><img src="../../src/img/main2_logo.png" alt="logo" class="brand-img"></a>
 		<ul class="side-menu">
-			<li><a href="./" class=""><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+			<li><a href="./" ><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
 			<li class="divider" data-text="main">Main</li>
             <li>
 				<a href=""><i class='bx bxs-user icon' ></i> Users <i class='bx bx-chevron-right icon-right' ></i></a>
 				<ul class="side-dropdown">
-					<li><a href="teacher">Teacher</a></li>
 					<li><a href="admin">Admin</a></li>
-					<li><a href="pricipal">Principal</a></li>
-					<li><a href="scheduler">Scheduler</a></li>
+					<li><a href="employer">Employer</a></li>
+					<li><a href="alumni">Alumni</a></li>
 				</ul>
 			</li>
-			<li><a href="department"><i class='bx bxs-building-house icon'></i> Department</a></li>
-			<li><a href="schedules"><i class='bx bxs-calendar-event icon'></i> Schedules</a></li>
-			<li><a href="rooms"><i class='bx bxs-door-open icon'></i> Rooms</a></li>
-			<li><a href="classes"><i class='bx bxs-chalkboard icon'></i> Classes</a></li>
-			<li><a href="subjects"><i class='bx bxs-book icon'></i> Subjects</a></li>
-
+			<li><a href="course"><i class='bx bx-list-ul icon'></i> Course</a></li>
+			<li><a href="jobs"><i class='bx bxs-briefcase icon'></i> Jobs</a></li>
+			<li><a href="reports"><i class='bx bxs-report icon'></i> Reports</a></li>
 			<li><a href="audit-trail"><i class='bx bxl-blogger icon'></i> Audit Trail</a></li>
 
 		</ul>
@@ -153,7 +145,7 @@ $user_last_update = $user_data['updated_at'];
 						</div>
 
 						<div class="addBtn">
-							<button type="submit" class="btn-primary" name="btn-update-system" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
+							<button type="submit" class="btn-warning" name="btn-update-system" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
 						</div>
 					</form>
                 </div>
@@ -180,7 +172,7 @@ $user_last_update = $user_data['updated_at'];
 						</div>
 
 						<div class="addBtn" style="padding-top: 2rem;">
-							<button type="submit" class="btn-primary" name="btn-update-logo" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
+							<button type="submit" class="btn-warning" name="btn-update-logo" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
 						</div>
 					</form>
                 </div>
@@ -215,7 +207,7 @@ $user_last_update = $user_data['updated_at'];
 						</div>
 
 						<div class="addBtn">
-							<button type="submit" class="btn-primary" name="btn-update-smtp" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
+							<button type="submit" class="btn-warning" name="btn-update-smtp" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
 						</div>
 					</form>
                 </div>
@@ -250,7 +242,7 @@ $user_last_update = $user_data['updated_at'];
 						</div>
 
 						<div class="addBtn">
-							<button type="submit" class="btn-primary" name="btn-update-recaptcha" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
+							<button type="submit" class="btn-warning" name="btn-update-recaptcha" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
 						</div>
 					</form>
                 </div>
@@ -259,13 +251,9 @@ $user_last_update = $user_data['updated_at'];
 		<!-- MAIN -->
 	</section>
 	<!-- END NAVBAR -->
-
-	<script src="../../src/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="../../src/node_modules/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="../../src/node_modules/jquery/dist/jquery.min.js"></script>
-	<script src="../../src/js/dashboard.js"></script>
-    <script src="../../src/js/loader.js"></script>
-	<script src="../../src/js/form.js"></script>
+    <?php
+    include_once '../../configuration/footer.php';
+    ?>
 
 	<!-- SWEET ALERT -->
 	<?php

@@ -1,7 +1,7 @@
 <?php
 require_once 'admin-class.php';
 //URL
-$user = new USER();
+$user = new ADMIN();
 $main_url = $user->mainUrl();
 $smtp_email = $user->smtpEmail();
 $smtp_password = $user->smtpPassword();
@@ -11,8 +11,8 @@ if(isset($_POST['btn-forgot-password']))
 {
  $email = $_POST['email'];
  
- $stmt = $user->runQuery("SELECT id, tokencode FROM users WHERE email=:email; AND tokencode=:code AND user_type = :user_type LIMIT 1");
- $stmt->execute(array(":code"=>$code,":email"=>$email, "user_type" => 1));
+ $stmt = $user->runQuery("SELECT id, tokencode FROM users WHERE email=:email AND user_type = :user_type LIMIT 1");
+ $stmt->execute(array(":email"=>$email, "user_type" => 1));
  $row = $stmt->fetch(PDO::FETCH_ASSOC); 
  if($stmt->rowCount() == 1)
  {
