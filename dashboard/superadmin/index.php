@@ -40,23 +40,19 @@ $user_last_update = $user_data['updated_at'];
 <!-- Loader -->
 <div class="loader"></div>
 
-	<!-- SIDEBAR -->
-	<section id="sidebar" class="hide">
+<section id="sidebar" class="hide">
 		<a href="" class="brand"><img src="../../src/img/main2_logo.png" alt="logo" class="brand-img"></a>
 		<ul class="side-menu">
-			<li><a href="" ><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+			<li><a href="" class="active"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
 			<li class="divider" data-text="main">Main</li>
             <li>
 				<a href=""><i class='bx bxs-user icon' ></i> Users <i class='bx bx-chevron-right icon-right' ></i></a>
 				<ul class="side-dropdown">
-					<li><a href="admin">Admin</a></li>
 					<li><a href="employer">Employer</a></li>
 					<li><a href="alumni">Alumni</a></li>
 				</ul>
 			</li>
 			<li><a href="course"><i class='bx bx-list-ul icon'></i> Course</a></li>
-			<li><a href="jobs"><i class='bx bxs-briefcase icon'></i> Jobs</a></li>
-			<li><a href="reports"><i class='bx bxs-report icon'></i> Reports</a></li>
 			<li><a href="audit-trail"><i class='bx bxl-blogger icon'></i> Audit Trail</a></li>
 
 		</ul>
@@ -104,8 +100,17 @@ $user_last_update = $user_data['updated_at'];
 				<div class="dashboard-card">
 					<div class="head">
 						<div>
+							<?php
+								$employer_stmt = $user->runQuery("SELECT * FROM users WHERE user_type = :user_type");
+								$employer_stmt->execute(array(":user_type" => 2));
+								$employer_count = $employer_stmt->rowCount();
 
-							<p>Admin</p>
+								echo
+								"
+									<h2>$employer_count</h2>
+								";
+							?>
+							<p>Employer</p>
 						</div>
 						<i class='bx bxs-user icon' ></i>
 					</div>
@@ -114,8 +119,17 @@ $user_last_update = $user_data['updated_at'];
 				<div class="dashboard-card">
 					<div class="head">
 						<div>
+							<?php
+								$alumni_stmt = $user->runQuery("SELECT * FROM users WHERE user_type = :user_type");
+								$alumni_stmt->execute(array(":user_type" => 3));
+								$alumni_count = $alumni_stmt->rowCount();
 
-							<p>Student</p>
+								echo
+								"
+									<h2>$alumni_count</h2>
+								";
+							?>
+							<p>Alumni</p>
 						</div>
 						<i class='bx bxs-user-pin icon' ></i>
 					</div>

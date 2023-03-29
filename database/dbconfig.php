@@ -1,19 +1,19 @@
 <?php
 class Database
 {
-    // Localhost
-    private $host = "localhost";
-    private $db_name = "alumni";
-    private $username = "root";
-    private $password = "";
-    public $conn;
-
-    // Live
+    // // Localhost
     // private $host = "localhost";
-    // private $db_name = "";
-    // private $username = "";
+    // private $db_name = "alumni";
+    // private $username = "root";
     // private $password = "";
     // public $conn;
+
+    // Live
+    private $host = "localhost";
+    private $db_name = "u839560647_alumni";
+    private $username = "u839560647_alumni";
+    private $password = "Andreishania12";
+    public $conn;
 
      
     public function dbConnection()

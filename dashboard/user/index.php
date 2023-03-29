@@ -106,10 +106,16 @@ $user_fullname  = $user_data['last_name'] . ", " . $user_data['first_name'];
 
         <!-- MAIN -->
         <main>
+        <h1 class="title">Posted Jobs</h1>
+            <ul class="breadcrumbs">
+                <li><a href="./">Home</a></li>
+                <li class="divider">|</li>
+                <li><a href="" class="active">Posted Jobs</a></li>
+
+            </ul>
         <div class="jobs-content">
                 <section id="jobs">
                     <div class="container">
-                        <h2>Posted Jobs</h2>
                         <?php
                             $stmt = $user->runQuery("SELECT * FROM jobs WHERE status = :status ORDER BY id DESC");
                             $stmt->execute(array(":status" => "active"));

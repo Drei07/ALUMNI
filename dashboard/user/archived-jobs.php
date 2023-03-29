@@ -85,11 +85,11 @@ $user_last_update = $user_data['updated_at'];
 
 		<!-- MAIN -->
 		<main>
-			<h1 class="title">Save Jobs</h1>
+			<h1 class="title">Archived Jobs</h1>
 			<ul class="breadcrumbs">
 				<li><a href="./" >Home</a></li>
 				<li class="divider">|</li>
-                <li><a href="" class="active">Save Jobs</a></li>
+                <li><a href="" class="active">Archived Jobs</a></li>
 			</ul>
             <div class="jobs-content">
                 <section id="jobs">
@@ -98,7 +98,7 @@ $user_last_update = $user_data['updated_at'];
 
                             //save jobs
                             $save_jobs_stmt = $user->runQuery("SELECT * FROM save_jobs WHERE user_id=:user_id AND status = :status");
-                            $save_jobs_stmt->execute(array(":user_id" => $user_id, ":status" => "active"));
+                            $save_jobs_stmt->execute(array(":user_id" => $user_id, ":status" => "disabled"));
                             while ($save_jobs_data = $save_jobs_stmt->fetch(PDO::FETCH_ASSOC)){
                                 $jobs_id = $save_jobs_data['jobs_id'];
                                 $save_jobs_id = $save_jobs_data['id'];
@@ -130,7 +130,7 @@ $user_last_update = $user_data['updated_at'];
                                 <p class="job-description"><?php echo $jobs_data['job_type']; ?></p>
                                 <p class="job-description">Posted: <?php echo date('l j, Y', strtotime($jobs_data['created_at'])); ?></p>
                                 <p class="job-applicants"><?php echo $applicant_count ?> applicants</p>
-                                <a href="controller/jobs-controller?id=<?php echo $save_jobs_id ?>&remove_jobs=1" class="button" >Remove</a>
+                                <a href="controller/jobs-controller?id=<?php echo $save_jobs_id ?>&activate_jobs=1" class="button" >Remove</a>
                             </div>
                         </div>
                         <?php

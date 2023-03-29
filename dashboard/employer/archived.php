@@ -1,20 +1,20 @@
 <?php
-require_once 'authentication/user-class.php';
+require_once 'authentication/employer-class.php';
 include_once '../../configuration/settings-configuration.php';
 
 // instances of the classes
 $config = new SystemConfig();
-$user = new ALUMNI();
+$user = new EMPLOYER();
 
 // check if user is logged in and redirect if not
 if(!$user->isUserLoggedIn())
 {
- $user->redirect('../../');
+ $user->redirect('../../private/employer');
 }
 
 // retrieve user data
 $stmt = $user->runQuery("SELECT * FROM users WHERE id=:uid");
-$stmt->execute(array(":uid"=>$_SESSION['alumniSession']));
+$stmt->execute(array(":uid"=>$_SESSION['employerSession']));
 $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // retrieve profile user and full name
@@ -45,11 +45,10 @@ $user_last_update = $user_data['updated_at'];
     <section id="sidebar" class="hide">
         <a href="" class="brand"><img src="../../src/img/main2_logo.png" alt="logo" class="brand-img"></a>
         <ul class="side-menu">
-            <li><a href="./"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+            <li><a href=""><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
             <li class="divider" data-text="main">My Jobs </li>
-            <li><a href="save-jobs"><i class='bx bxs-bookmarks icon'></i> Save Jobs</a></li>
-            <li><a href="applied-jobs"><i class='bx bxs-briefcase icon'></i> Applied Jobs</a></li>
-            <li><a href="archived-jobs"><i class='bx bxl-blogger icon'></i> Archived Jobs</a></li>
+            <li><a href="company"><i class='bx bxs-buildings icon'></i> Company</a></li>
+            <li><a href="archived" class="active"><i class='bx bxl-blogger icon'></i> Archived Jobs</a></li>
 
         </ul>
     </section>
@@ -77,7 +76,7 @@ $user_last_update = $user_data['updated_at'];
 				<img src="../../src/img/<?php echo $user_profile ?>" alt="">
 				<ul class="profile-link">
 					<li><a href="profile"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
-					<li><a href="authentication/user-signout" class="btn-signout"><i class='bx bxs-log-out-circle' ></i> Signout</a></li>
+					<li><a href="authentication/employer-signout" class="btn-signout"><i class='bx bxs-log-out-circle' ></i> Signout</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -85,27 +84,19 @@ $user_last_update = $user_data['updated_at'];
 
 		<!-- MAIN -->
 		<main>
-			<h1 class="title">Save Jobs</h1>
+			<h1 class="title">Archived Jobs</h1>
 			<ul class="breadcrumbs">
 				<li><a href="./" >Home</a></li>
 				<li class="divider">|</li>
-                <li><a href="" class="active">Save Jobs</a></li>
+                <li><a href="" class="active">Archived Jobs</a></li>
 			</ul>
             <div class="jobs-content">
                 <section id="jobs">
                     <div class="container">
                         <?php
-
-                            //save jobs
-                            $save_jobs_stmt = $user->runQuery("SELECT * FROM save_jobs WHERE user_id=:user_id AND status = :status");
-                            $save_jobs_stmt->execute(array(":user_id" => $user_id, ":status" => "active"));
-                            while ($save_jobs_data = $save_jobs_stmt->fetch(PDO::FETCH_ASSOC)){
-                                $jobs_id = $save_jobs_data['jobs_id'];
-                                $save_jobs_id = $save_jobs_data['id'];
                             
-                            
-                            $stmt = $user->runQuery("SELECT * FROM jobs WHERE id = :id AND status = :status ORDER BY id DESC");
-                            $stmt->execute(array(":id" => $jobs_id, ":status" => "active"));
+                            $stmt = $user->runQuery("SELECT * FROM jobs WHERE user_id = :id AND status = :status ORDER BY id DESC");
+                            $stmt->execute(array(":id" => $user_id, ":status" => "disabled"));
                             while ($jobs_data = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                 // Company
                                 $company_stmt = $user->runQuery("SELECT * FROM company WHERE id=:id");
@@ -130,12 +121,12 @@ $user_last_update = $user_data['updated_at'];
                                 <p class="job-description"><?php echo $jobs_data['job_type']; ?></p>
                                 <p class="job-description">Posted: <?php echo date('l j, Y', strtotime($jobs_data['created_at'])); ?></p>
                                 <p class="job-applicants"><?php echo $applicant_count ?> applicants</p>
-                                <a href="controller/jobs-controller?id=<?php echo $save_jobs_id ?>&remove_jobs=1" class="button" >Remove</a>
+                                <a href="controller/job-controller?id=<?php echo $jobs_data['id'] ?>&activate_jobs=1" class="button" >Remove</a>
                             </div>
                         </div>
                         <?php
                             }
-                        }
+                        
                         ?>
                 </section>
             </div>

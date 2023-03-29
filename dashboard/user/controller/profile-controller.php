@@ -106,7 +106,7 @@ class ProfileSettings
             ":profile"  => $avatar,
         ));
 
-        if ($exec && move_uploaded_file($_FILES['system_logo']['tmp_name'], $folder)) {
+        if ($exec && move_uploaded_file($_FILES['avatar']['tmp_name'], $folder)) {
             $_SESSION['status_title'] = 'Success!';
             $_SESSION['status'] = 'Avatar successfully updated';
             $_SESSION['status_code'] = 'success';

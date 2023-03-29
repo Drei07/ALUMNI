@@ -1,20 +1,20 @@
 <?php
-require_once 'authentication/superadmin-class.php';
+require_once 'authentication/employer-class.php';
 include_once '../../configuration/settings-configuration.php';
 
 // instances of the classes
 $config = new SystemConfig();
-$user = new SUPERADMIN();
+$user = new EMPLOYER();
 
 // check if user is logged in and redirect if not
 if(!$user->isUserLoggedIn())
 {
- $user->redirect('../../private/superadmin/');
+ $user->redirect('../../private/employer/');
 }
 
 // retrieve user data
 $stmt = $user->runQuery("SELECT * FROM users WHERE id=:uid");
-$stmt->execute(array(":uid"=>$_SESSION['superadminSession']));
+$stmt->execute(array(":uid"=>$_SESSION['employerSession']));
 $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // retrieve profile user and full name
@@ -42,23 +42,16 @@ $user_last_update = $user_data['updated_at'];
 <div class="loader"></div>
 
 	<!-- SIDEBAR -->
-	<section id="sidebar" class="hide">
-		<a href="" class="brand"><img src="../../src/img/main2_logo.png" alt="logo" class="brand-img"></a>
-		<ul class="side-menu">
-			<li><a href=""><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
-			<li class="divider" data-text="main">Main</li>
-            <li>
-				<a href=""><i class='bx bxs-user icon' ></i> Users <i class='bx bx-chevron-right icon-right' ></i></a>
-				<ul class="side-dropdown">
-					<li><a href="employer">Employer</a></li>
-					<li><a href="alumni">Alumni</a></li>
-				</ul>
-			</li>
-			<li><a href="course"><i class='bx bx-list-ul icon'></i> Course</a></li>
-			<li><a href="audit-trail"><i class='bx bxl-blogger icon'></i> Audit Trail</a></li>
+    <section id="sidebar" class="hide">
+        <a href="" class="brand"><img src="../../src/img/main2_logo.png" alt="logo" class="brand-img"></a>
+        <ul class="side-menu">
+            <li><a href=""><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+            <li class="divider" data-text="main">My Jobs </li>
+            <li><a href="company"><i class='bx bxs-buildings icon'></i> Company</a></li>
+            <li><a href="archived"><i class='bx bxl-blogger icon'></i> Archived Jobs</a></li>
 
-		</ul>
-	</section>
+        </ul>
+    </section>
 	<!-- SIDEBAR -->
 
 	<!-- NAVBAR -->
@@ -84,7 +77,7 @@ $user_last_update = $user_data['updated_at'];
 				<ul class="profile-link">
 					<li><a href="profile"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
 					<li><a href="settings"><i class='bx bxs-cog' ></i> Settings</a></li>
-					<li><a href="authentication/superadmin-signout" class="btn-signout"><i class='bx bxs-log-out-circle' ></i> Signout</a></li>
+					<li><a href="authentication/employer-signout" class="btn-signout"><i class='bx bxs-log-out-circle' ></i> Signout</a></li>
 				</ul>
 			</div>
 		</nav>

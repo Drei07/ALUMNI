@@ -4,10 +4,10 @@
 	try {
 
 		// localhost
-		$pdoConnect = new PDO("mysql:host=localhost;dbname=alumni", "root", "");
+		// $pdoConnect = new PDO("mysql:host=localhost;dbname=alumni", "root", "");
 
 		// Live
-		// $pdoConnect = new PDO("mysql:host=localhost;dbname=u867039073_dhvsu_qrcode", "u867039073_dhvsu_qrcode", "Andreishania12");
+		$pdoConnect = new PDO("mysql:host=localhost;dbname=u839560647_alumni", "u839560647_alumni", "Andreishania12");
 		$pdoConnect->setAttribute(PDO:: ATTR_ERRMODE, PDO:: ERRMODE_EXCEPTION);
 
 	}

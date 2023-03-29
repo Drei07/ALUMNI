@@ -26,11 +26,13 @@ class Company {
             ":company_logo"             => $company_logo,
         ));
 
-        if ($exec) {
+        if ($exec && move_uploaded_file($_FILES['company_logo']['tmp_name'], $folder)) {
             $_SESSION['status_title'] = 'Success!';
             $_SESSION['status'] = 'Company registered successfully';
             $_SESSION['status_code'] = 'success';
             $_SESSION['status_timer'] = 40000;
+
+            
         } else {
             $_SESSION['status_title'] = 'Oops!';
             $_SESSION['status'] = 'Something went wrong, please try again!';

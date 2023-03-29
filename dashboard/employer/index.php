@@ -73,11 +73,10 @@ $company_name =  $company_data['company_name'];
     <section id="sidebar" class="hide">
         <a href="" class="brand"><img src="../../src/img/main2_logo.png" alt="logo" class="brand-img"></a>
         <ul class="side-menu">
-            <li><a href=""><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+            <li><a href="" class="active"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
             <li class="divider" data-text="main">My Jobs </li>
-            <li><a href="save-jobs"><i class='bx bxs-bookmarks icon'></i> Save Jobs</a></li>
-            <li><a href="applied-jobs"><i class='bx bxs-briefcase icon'></i> Applied Jobs</a></li>
-            <li><a href="archived-jobs"><i class='bx bxl-blogger icon'></i> Archived Jobs</a></li>
+            <li><a href="company"><i class='bx bxs-buildings icon'></i> Company</a></li>
+            <li><a href="archived"><i class='bx bxl-blogger icon'></i> Archived Jobs</a></li>
 
         </ul>
     </section>
@@ -105,7 +104,6 @@ $company_name =  $company_data['company_name'];
                 <img src="../../src/img/<?php echo $user_profile ?>" alt="">
                 <ul class="profile-link">
                     <li><a href="profile"><i class='bx bxs-user-circle icon'></i> Profile</a></li>
-                    <li><a href="settings"><i class='bx bxs-cog'></i> Settings</a></li>
                     <li><a href="authentication/employer-signout" class="btn-signout"><i class='bx bxs-log-out-circle'></i>
                             Signout</a></li>
                 </ul>
@@ -189,8 +187,8 @@ $company_name =  $company_data['company_name'];
                     <div class="container">
                         <h2>Posted Jobs</h2>
                         <?php
-                            $stmt = $user->runQuery("SELECT * FROM jobs WHERE user_id = :user_id ORDER BY id DESC");
-                            $stmt->execute(array(":user_id" => $user_id));
+                            $stmt = $user->runQuery("SELECT * FROM jobs WHERE user_id = :user_id AND status = :status ORDER BY id DESC");
+                            $stmt->execute(array(":user_id" => $user_id, ":status" => "active"));
                             while ($jobs_data = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
                             //applicants

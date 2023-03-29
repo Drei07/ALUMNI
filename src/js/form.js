@@ -126,6 +126,26 @@ $('.delete').on('click', function (e) {
 		});
 })
 
+//Delete Profile
+$('.delete2').on('click', function (e) {
+	e.preventDefault();
+	const href = $(this).attr('href')
+
+	swal({
+		title: "Delete?",
+		text: "Do you want to delete?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+		.then((willDelete) => {
+			if (willDelete) {
+				document.location.href = href;
+			}
+		});
+})
+
+
 //Edit Profile
 $('.edit').on('click', function (e) {
 	e.preventDefault();
@@ -222,6 +242,43 @@ $('.applied').on('click', function (e) {
 		});
 })
 
+//accept Profile
+$('.accept').on('click', function (e) {
+	e.preventDefault();
+	const href = $(this).attr('href')
+
+	swal({
+		title: "Accept?",
+		text: "Do you want to accept this applicant?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+		.then((willDelete) => {
+			if (willDelete) {
+				document.location.href = href;
+			}
+		});
+})
+
+//reject Profile
+$('.reject').on('click', function (e) {
+	e.preventDefault();
+	const href = $(this).attr('href')
+
+	swal({
+		title: "Reject?",
+		text: "Do you want to reject this applicant?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+		.then((willDelete) => {
+			if (willDelete) {
+				document.location.href = href;
+			}
+		});
+})
 // Signout
 $('.btn-signout').on('click', function (e) {
 	e.preventDefault();

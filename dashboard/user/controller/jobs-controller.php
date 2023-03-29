@@ -49,8 +49,8 @@ class JOB {
         header('Location: ../');
     }
     
-    //Applied Jobs
-    public function appliedJobs($user_id, $jobs_id){
+    public function appliedJobs($user_id, $jobs_id, $resume){
+        $folder = "../../../src/pdf/" . basename($resume);
         $stmt = $this->runQuery('SELECT * FROM application WHERE user_id=:user_id AND jobs_id=:jobs_id');
         $stmt->execute(array(
             ":user_id"  => $user_id,
@@ -64,26 +64,89 @@ class JOB {
             $_SESSION['status_code'] = 'error';
             $_SESSION['status_timer'] = 100000;
         } else {
-            $stmt = $this->runQuery('INSERT INTO application (user_id, jobs_id) VALUES (:user_id, :jobs_id)');
-            $exec = $stmt->execute(array(
-                ":user_id"  => $user_id,
-                ":jobs_id"  => $jobs_id,
-            ));
-    
-            if ($exec) {
-                $_SESSION['status_title'] = 'Success!';
-                $_SESSION['status'] = 'Applied succesfully';
-                $_SESSION['status_code'] = 'success';
-                $_SESSION['status_timer'] = 40000;
-            } else {
+            $file_type = pathinfo($folder, PATHINFO_EXTENSION);
+            if (strtolower($file_type) != 'pdf') {
                 $_SESSION['status_title'] = 'Oops!';
-                $_SESSION['status'] = 'Something went wrong, please try again!';
+                $_SESSION['status'] = 'Only PDF files are allowed!';
                 $_SESSION['status_code'] = 'error';
                 $_SESSION['status_timer'] = 100000;
+            } else {
+                $stmt = $this->runQuery('INSERT INTO application (user_id, jobs_id, resume) VALUES (:user_id, :jobs_id, :resume)');
+                $exec = $stmt->execute(array(
+                    ":user_id"  => $user_id,
+                    ":jobs_id"  => $jobs_id,
+                    ":resume"   => $resume
+                ));
+        
+                if ($exec && move_uploaded_file($_FILES['resume']['tmp_name'], $folder)) {
+                    $_SESSION['status_title'] = 'Success!';
+                    $_SESSION['status'] = 'Applied succesfully';
+                    $_SESSION['status_code'] = 'success';
+                    $_SESSION['status_timer'] = 40000;
+                } else {
+                    $_SESSION['status_title'] = 'Oops!';
+                    $_SESSION['status'] = 'Something went wrong, please try again!';
+                    $_SESSION['status_code'] = 'error';
+                    $_SESSION['status_timer'] = 100000;
+                }
             }
         }
     
         header("Location: ../view-jobs?id=$jobs_id");
+    }
+    
+
+    // //remove save jobs
+    public function removeSaveJobs($save_jobs_id){
+        $disabled = "disabled";
+        $stmt = $this->runQuery('UPDATE save_jobs SET status=:status WHERE id=:id');
+        $exec = $stmt->execute(array(
+            ":id"        => $save_jobs_id,
+            ":status"   => $disabled,
+        ));
+
+        if ($exec) {
+            $_SESSION['status_title'] = 'Success!';
+            $_SESSION['status'] = ' Remove successfully!';
+            $_SESSION['status_code'] = 'success';
+            $_SESSION['status_timer'] = 40000;
+        } else {
+            $_SESSION['status_title'] = 'Oops!';
+            $_SESSION['status'] = 'Something went wrong, please try again!';
+            $_SESSION['status_code'] = 'error';
+            $_SESSION['status_timer'] = 100000;
+        }
+
+        header('Location: ../save-jobs');
+        exit();
+
+    }
+
+
+    // //activate save jobs
+    public function activateSaveJobs($save_jobs_id){
+        $active = "active";
+        $stmt = $this->runQuery('UPDATE save_jobs SET status=:status WHERE id=:id');
+        $exec = $stmt->execute(array(
+            ":id"        => $save_jobs_id,
+            ":status"   => $active,
+        ));
+
+        if ($exec) {
+            $_SESSION['status_title'] = 'Success!';
+            $_SESSION['status'] = ' Save successfully!';
+            $_SESSION['status_code'] = 'success';
+            $_SESSION['status_timer'] = 40000;
+        } else {
+            $_SESSION['status_title'] = 'Oops!';
+            $_SESSION['status'] = 'Something went wrong, please try again!';
+            $_SESSION['status_code'] = 'error';
+            $_SESSION['status_timer'] = 100000;
+        }
+
+        header('Location: ../archived-jobs');
+        exit();
+
     }
 
     
@@ -129,33 +192,6 @@ class JOB {
     //     exit();
     // }
 
-
-    // //delete course
-    // public function deleteCourse($course_id){
-    //     $disabled = "disabled";
-    //     $stmt = $this->runQuery('UPDATE course SET status=:status WHERE id=:id');
-    //     $exec = $stmt->execute(array(
-    //         ":id"        => $course_id,
-    //         ":status"   => $disabled,
-    //     ));
-
-    //     if ($exec) {
-    //         $_SESSION['status_title'] = 'Success!';
-    //         $_SESSION['status'] = 'Course successfully deleted!';
-    //         $_SESSION['status_code'] = 'success';
-    //         $_SESSION['status_timer'] = 40000;
-    //     } else {
-    //         $_SESSION['status_title'] = 'Oops!';
-    //         $_SESSION['status'] = 'Something went wrong, please try again!';
-    //         $_SESSION['status_code'] = 'error';
-    //         $_SESSION['status_timer'] = 100000;
-    //     }
-
-    //     header('Location: ../course');
-    //     exit();
-
-    // }
-
     // //activate course
     // public function activateCourse($course_id){
     //     $active = "active";
@@ -198,12 +234,29 @@ if (isset($_GET['save_jobs'])) {
 }
 
 //applied 
-if (isset($_GET['applied_jobs'])) {
+if (isset($_POST['btn-add-resume'])) {
     $user_id     = $_GET['id'];
     $jobs_id     = $_GET['jobs_id'];
+    $resume      = $_FILES['resume']['name'];;
 
     $applied_jobs = new JOB();
-    $applied_jobs->appliedJobs($user_id, $jobs_id);
+    $applied_jobs->appliedJobs($user_id, $jobs_id, $resume);
+}
+
+// //remove jobs
+if (isset($_GET['remove_jobs'])) {
+    $save_jobs_id     = $_GET['id'];
+
+    $remove_save_jobs = new JOB();
+    $remove_save_jobs->removeSaveJobs($save_jobs_id);
+}
+
+// activate jobs
+if (isset($_GET['activate_jobs'])) {
+    $save_jobs_id     = $_GET['id'];
+
+    $activate_save_jobs = new JOB();
+    $activate_save_jobs->activateSaveJobs($save_jobs_id);
 }
 
 // //edit
@@ -215,13 +268,6 @@ if (isset($_GET['applied_jobs'])) {
 //     $edit_course->editCourse($course_id, $course_name);
 // }
 
-// //delete
-// if (isset($_GET['delete_course'])) {
-//     $course_id = $_GET["id"];
-
-//     $delete_course = new Course();
-//     $delete_course->deleteCourse($course_id);
-// }
 
 // //activate
 // if (isset($_GET['activate_course'])) {

@@ -967,7 +967,7 @@ main .profile-form .profile .profile-img button{
 	border: none;
 }
 
-main .profile-form .profile .profile-img a{
+main .profile-form .profile .profile-img .btn{
 	display: block;
 	text-align: center;
 	font-size: 13px;
