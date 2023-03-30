@@ -19,7 +19,7 @@ class alumniRegistration {
         $this->system_name = $this->alumni->systemName();
     }
 
-    public function signUp($email, $upass, $confirm_password) {
+    public function signUp($email, $upass, $confirm_password, $user_type) {
         $tokencode = md5(uniqid(rand()));
 
         if($upass != $confirm_password) {
@@ -33,7 +33,7 @@ class alumniRegistration {
         if($stmt->rowCount() > 0) {
             $this->redirectWithError("Email already taken. Please try another one.");
         } else {
-            if($this->alumni->register($email, $upass, $tokencode)) {
+            if($this->alumni->register($email, $upass, $tokencode, $user_type)) {
                 $id = $this->alumni->lasdID();  
                 $key = base64_encode($id);
                 $id = $key;
@@ -113,9 +113,10 @@ if(isset($_POST['btn-signup'])) {
     $email = trim($_POST['email']);
     $upass = trim($_POST['password']);
     $confirm_password = trim($_POST['confirm_password']);
+    $user_type = 3;
 
     $signup = new alumniRegistration();
-    $signup->signUp($email, $upass, $confirm_password);
+    $signup->signUp($email, $upass, $confirm_password, $user_type);
 }
 
 //add other information to alumni

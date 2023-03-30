@@ -68,18 +68,20 @@ public function mainUrl(){
   return $stmt;
  }
  
- public function register($email, $upass, $tokencode)
+ public function register($email, $upass, $tokencode, $user_type)
  {
   try
   {       
    $password = md5($upass);
-   $stmt = $this->conn->prepare("INSERT INTO users(email, password, tokencode) 
-                                        VALUES(:email, :password, :tokencode)");
+   $stmt = $this->conn->prepare("INSERT INTO users(email, password, tokencode, user_type) 
+                                        VALUES(:email, :password, :tokencode, :user_type)");
    
 
    $stmt->bindparam(":email",$email);
    $stmt->bindparam(":password",$password);
    $stmt->bindparam(":tokencode",$tokencode);
+   $stmt->bindparam(":user_type",$user_type);
+
    $stmt->execute(); 
    return $stmt;
   }
