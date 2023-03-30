@@ -44,6 +44,16 @@ $user_courses_id = $user_data['courses_id'] ?? "";
 
 $user_fullname  = $user_data['last_name'] . ", " . $user_data['first_name'];
 
+//company details
+$stmt = $user->runQuery("SELECT * FROM company WHERE user_id=:user_id");
+$stmt->execute(array(":user_id" => $user_id));
+$company_data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$company_id = $company_data['id'] ?? "";
+$company_logo = $company_data['company_logo'] ?? "";
+$company_name =  $company_data['company_name'] ?? "";
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
