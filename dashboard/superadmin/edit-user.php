@@ -69,7 +69,6 @@ $user_type          = $user_data['user_type'];;
                             <div class="registration">
                                 <?php
                                 // employee data
-                                    $company_name       = $user_data['company_name'];
                                     $first_name         = $user_data['first_name'];
                                     $middle_name        = $user_data['middle_name'];
                                     $last_name          = $user_data['last_name'];
@@ -80,17 +79,6 @@ $user_type          = $user_data['user_type'];;
                                     class="row gx-5 needs-validation" name="form" onsubmit="return validate()"
                                     novalidate style="overflow: hidden;">
                                     <div class="row gx-5 needs-validation">
-
-                                        <div class="col-md-12">
-                                            <label for="company" class="form-label">Company Name<span> *</span></label>
-                                            <input type="text" onkeyup="this.value = this.value.toUpperCase();"
-                                                class="form-control" value="<?php echo $company_name ?>"
-                                                autocapitalize="on" autocomplete="off" name="company_name"
-                                                id="company_name" required>
-                                            <div class="invalid-feedback">
-                                                Please provide a Company Name.
-                                            </div>
-                                        </div>
 
                                         <div class="col-md-12">
                                             <label for="first_name" class="form-label">First Name<span> *</span></label>
