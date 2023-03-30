@@ -91,7 +91,7 @@ public function mainUrl(){
 
 
  
- public function login($email,$upass,$user_type)
+ public function login($email,$upass)
  {
   try
   {

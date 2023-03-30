@@ -24,7 +24,7 @@ if(isset($_POST['btn-signin']))
  $email = trim($_POST['email']);
  $upass = trim($_POST['password']);
  
- if($user->login($email,$upass,$user_type))
+ if($user->login($email,$upass))
  {
       $_SESSION['status_title'] = "Hey !";
       $_SESSION['status'] = "Welcome back! ";
