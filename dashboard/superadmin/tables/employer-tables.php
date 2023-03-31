@@ -85,7 +85,6 @@ $output = '
       <td>'.$row["phone_number"].'</td>
       <td>'.$row["email"].'</td>
       <td>
-      <button type="button" class="btn btn-primary V"><a href="user-profile?id='.$row["id"].'" class="view">View</a></button>&nbsp;&nbsp;
       <button type="button" class="btn btn-success V"><a href="edit-user?id='.$row["id"].'" class="edit"><i class="bx bxs-edit"></i></a></button>&nbsp;&nbsp;
       '.$buttons.'
       </td>        
