@@ -31,7 +31,7 @@ $company_stmt = $user->runQuery("SELECT * FROM company WHERE user_id=:user_id");
 $company_stmt->execute(array(":user_id" => $user_id));
 $company_data = $company_stmt->fetch(PDO::FETCH_ASSOC);
 
-$company_id    = $company_data['company_id'];
+$company_id    = $company_data['id'];
 $company_name = $company_data['company_name'];
 $company_address = $company_data['company_address'];
 $company_email = $company_data['company_email'];
