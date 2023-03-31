@@ -120,7 +120,7 @@ $company_logo = $company_data['company_logo'];
                         <form action="controller/company-controller.php?id=<?php echo $company_id ?>" method="POST" class="row gx-5 needs-validation" name="form" onsubmit="return validate()" novalidate style="overflow: hidden;">
                             <div class="row gx-5 needs-validation">
 
-                                <label class="form-label" style="text-align: left; padding-top: .5rem; padding-bottom: 1rem; font-size: 1rem; font-weight: bold;"><i class='bx bxs-edit'></i> Edit Profile<p>Last update: <?php echo $user_last_update  ?></p></label>
+                                <label class="form-label" style="text-align: left; padding-top: .5rem; padding-bottom: 1rem; font-size: 1rem; font-weight: bold;"><i class='bx bxs-edit'></i> Company Profile</label>
                                 <div class="col-md-12">
                                     <label for="first_name" class="form-label">Company Name<span>*</span></label>
                                     <input type="text" class="form-control" value="<?php echo $company_name ?>" autocapitalize="on" autocomplete="off" name="company_name" id="company_name" required>
