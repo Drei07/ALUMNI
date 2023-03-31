@@ -161,6 +161,10 @@ $company_logo = $company_data['company_logo'];
                                     </div>
                                 </div>
 
+                                <div class="addBtn">
+                                    <button type="submit" class="warning" name="btn-update-company" id="btn-update" onclick="return IsEmpty(); sexEmpty();">Update</button>
+                                </div>
+
                             </div>
                         </form>
                     </div>

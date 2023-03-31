@@ -43,47 +43,35 @@ class Company {
         header('Location: ../');
     }
     
-    // //edit course
-    // public function editCourse($course_id, $course_name){
-    //     // Check if the course name has actually changed
-    //     $old_name_stmt = $this->runQuery('SELECT course FROM course WHERE id=:id');
-    //     $old_name_stmt->execute(array(
-    //         ":id" => $course_id,
-    //     ));
-    //     $old_name = $old_name_stmt->fetchColumn();
-    //     if ($old_name == $course_name) {
-    //         // Course name has not changed, don't need to update
-    //         $_SESSION['status_title'] = 'Oops!';
-    //         $_SESSION['status'] = 'No changes were made.';
-    //         $_SESSION['status_code'] = 'error';
-    //         $_SESSION['status_timer'] = 40000;
-            
-    //         header('Location: ../course');
-    //         exit();
-    //     }
+    //edit course
+    public function updateCompany($company_id, $company_name, $company_address, $company_phone_number, $company_description, $company_email){
 
-    //     // Course name has changed, execute UPDATE query
-    //     $stmt = $this->runQuery('UPDATE course SET course=:course WHERE id=:id');
-    //     $exec = $stmt->execute(array(
-    //         ":id"         => $course_id,
-    //         ":course"     => $course_name,
-    //     ));
+        // Course name has changed, execute UPDATE query
+        $stmt = $this->runQuery('UPDATE company SET company_name=:company_name, company_address=:company_address, company_email=:company_email, company_phone_number=:company_phone_number, company_description=:company_description WHERE id=:id');
+        $exec = $stmt->execute(array(
+            ":id"                       => $company_id,
+            ":company_name"             => $company_name,
+            ":company_address"          => $company_address,
+            ":company_email"            => $company_email,
+            ":company_phone_number"     => $company_phone_number,
+            ":company_description"      => $company_description,
+        ));
 
-    //     if ($exec) {
-    //         $_SESSION['status_title'] = 'Success!';
-    //         $_SESSION['status'] = 'Course successfully updated!';
-    //         $_SESSION['status_code'] = 'success';
-    //         $_SESSION['status_timer'] = 40000;
-    //     } else {
-    //         $_SESSION['status_title'] = 'Oops!';
-    //         $_SESSION['status'] = 'Something went wrong, please try again!';
-    //         $_SESSION['status_code'] = 'error';
-    //         $_SESSION['status_timer'] = 100000;
-    //     }
+        if ($exec) {
+            $_SESSION['status_title'] = 'Success!';
+            $_SESSION['status'] = 'Company successfully updated!';
+            $_SESSION['status_code'] = 'success';
+            $_SESSION['status_timer'] = 40000;
+        } else {
+            $_SESSION['status_title'] = 'Oops!';
+            $_SESSION['status'] = 'Something went wrong, please try again!';
+            $_SESSION['status_code'] = 'error';
+            $_SESSION['status_timer'] = 100000;
+        }
 
-    //     header('Location: ../course');
-    //     exit();
-    // }
+        header('Location: ../company');
+        exit();
+    }
 
 
     // //delete course
@@ -158,6 +146,21 @@ if (isset($_POST['btn-add-company'])) {
     $add_company = new Company();
     $add_company->addCompany($user_id, $company_name, $company_address, $company_phone_number, $company_description, $company_logo, $company_email);
 }
+
+//edit
+if (isset($_POST['btn-update-company'])) {
+    $company_id                = $_GET['id'];
+    $company_name           = trim($_POST['company_name']);
+    $company_address        = trim($_POST['company_address']);
+    $company_phone_number   = trim($_POST['company_phone_number']);
+    $company_description    = trim($_POST['company_description']);
+    $company_email          = trim($_POST['company_email']);
+
+
+    $update_company = new Company();
+    $update_company->updateCompany($company_id, $company_name, $company_address, $company_phone_number, $company_description, $company_email);
+}
+
 
 // //edit
 // if (isset($_POST['btn-edit-course'])) {
